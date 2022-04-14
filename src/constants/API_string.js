@@ -1,5 +1,6 @@
 export default {
-    BASE_URL: 'https://historebe.herokuapp.com/',
+    // BASE_URL: 'https://hitechstore.herokuapp.com/',
+    BASE_URL: 'http://192.168.1.9:8080/',
     PRODUCTS: 'api/products',
     CATEGORIES: 'api/categories',
     BRANDS: 'api/brands',

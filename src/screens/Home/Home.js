@@ -1,4 +1,4 @@
-import { Dimensions, View, Text, SafeAreaView, FlatList, Image, ActivityIndicator, TouchableOpacity, TextInput, Animated, Easing, ScrollView } from 'react-native'
+import { Dimensions, View, Text, SafeAreaView, FlatList, Image, ActivityIndicator, TouchableOpacity, TextInput, Animated, Easing, ScrollView, RefreshControl } from 'react-native'
 import React, { useState, useRef, useEffect } from 'react'
 import home_styles from './home_styles'
 import HeaderComponent from '../../components/HeaderComponent'
@@ -15,20 +15,24 @@ import CustomIndicator from '../../components/CustomIndicator'
 import { getBrands, getDataFromAPI } from '../../services/api/getDataFromApi'
 import BrandsListHorizontal from '../../components/BrandsListHorizontal'
 import ProductHorizontal from '../../components/ProductHorizontal'
+import axios from 'axios'
 const Home = ({ navigation, route }) => {
 
     useEffect(() => {
+        getImage()
         getData()
         welcomeEffect()
     }, [])
 
-    const [isLoading, setLoading] = useState(false)
+    const [isFetching, setFetching] = useState(false);
+    const [isLoading, setLoading] = useState(false);
     const height = Dimensions.get('screen').height;
     const width = Dimensions.get('screen').width;
     const scale = useRef(new Animated.Value(height)).current;
     const fade = useRef(new Animated.Value(0)).current;
     const shake = useRef(new Animated.Value(0.5)).current;
 
+    const [brands, setBrands] = useState([])
     const [gamingMouse, setGamingMouse] = useState([])
     const [officeMouse, setOfficeMouse] = useState([])
     const [gamingKbs, setGamingKbs] = useState([])
@@ -43,11 +47,22 @@ const Home = ({ navigation, route }) => {
     }
 
     const getData = async () => {
+
         setLoading(true)
+        setBrands(await getBrands())
         setGamingMouse(await getDataFromAPI(API_string.GAMINGMOUSE.code_name));
         setOfficeMouse(await getDataFromAPI(API_string.OFFICEMOUSE.code_name));
         setGamingKbs(await getDataFromAPI(API_string.GAMINGKEYBOARD.code_name));
+        setFetching(false)
         setLoading(false)
+    }
+
+    const getImage = () =>{
+        let url = API_string.BASE_URL + API_string.PRODUCTS;
+        axios.get(url)
+        .then(response => {
+            const data = response.data;
+        })
     }
 
     const searching = () => {
@@ -55,6 +70,12 @@ const Home = ({ navigation, route }) => {
             searchEff()
         } else {
         }
+    }
+
+    const onRefresh = () =>{
+        setFetching(true)
+        getData()
+
     }
 
     const searchEff = () => {
@@ -117,10 +138,12 @@ const Home = ({ navigation, route }) => {
                     <CustomIndicator />
                 ) : (null)}
 
-                <ScrollView>
+                <ScrollView
+                refreshControl={
+                    <RefreshControl refreshing={isFetching} onRefresh={onRefresh} />}>
                     <Animated.View style={[{ height: '100%' }, { opacity: fade }]}>
                         <Animated.View style={[{opacity:fade}]}>
-                        <BrandsListHorizontal navigation={navigation} />
+                        <BrandsListHorizontal brands={brands} isFetching={isFetching} navigation={navigation} />
                         </Animated.View>
                         <View>
                         <ProductHorizontal products={gamingMouse} name={API_string.GAMINGMOUSE.name} navigation={navigation} />

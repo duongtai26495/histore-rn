@@ -4,16 +4,9 @@ import { getBrands } from '../services/api/getDataFromApi'
 import API_string from '../constants/API_string'
 import brand_styles from '../screens/Home/brand_styles'
 import Navigation_path from '../constants/Navigation_path'
-const BrandsListHorizontal = ({navigation}) => {
+const BrandsListHorizontal = (props) => {
 
-    useEffect(()=>{
-        getBrandsList()
-    },[])
-
-    const [brands, setBrands] = useState([])
-
-    const getBrandsList = async () => setBrands(await getBrands()) 
-
+    const {navigation, brands} = props
 
     const itemBrands = ({ item }) => {
         const url = API_string.BASE_URL + "api/images/" + item.image_url

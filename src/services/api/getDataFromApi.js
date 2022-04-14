@@ -1,12 +1,12 @@
 import axios from "axios"
 import API_string from "../../constants/API_string"
 
-
 export async function getBrands() {
     let url = API_string.BASE_URL + API_string.BRANDS;
     return await axios.get(url)
         .then(response => {
             const result = response.data;
+            console.log("Brands: "+result)
             return result;
         })
         .catch(error => console.log(error))
@@ -17,6 +17,7 @@ export async function getDataFromAPI(code_name) {
     return await axios.get(url)
         .then(response => {
             const result = response.data;
+            console.log("Products: "+result)
             return result;
         })
         .catch(error => console.log(error))

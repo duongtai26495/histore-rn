@@ -35,7 +35,6 @@ const ProductHorizontal = (props) => {
         const p_category = item.category.name;
         const p_brand_image = API_string.BASE_URL + "api/images/" + item.brand.image_url;
         const p_brand = item.brand.name;
-        console.log(p_img)
         return (
             <Animated.View style={[product_styles.row, { opacity: fade }]} >
                 <TouchableOpacity onPress={() => { navigation.navigate(Navigation_path.PRODUCTDETAIL, { itemId: p_id }) }} key={p_id}>
@@ -66,7 +65,7 @@ const ProductHorizontal = (props) => {
             </View>
             <FlatList
                 style={home_styles.flatlist}
-                data={products.slice(0,10)}
+                data={products}
                 renderItem={itemProduct}
                 horizontal={true}
                 keyExtractor={(item) => item.id}
