@@ -1,13 +1,13 @@
-import { View, Text, Animated, StyleSheet, TouchableOpacity } from 'react-native'
+
 import React, { useRef, useEffect } from 'react'
-import { transparent } from 'react-native-paper/lib/typescript/styles/colors';
-import LoopCycler from './src/components/LoopCycler';
+import { NavigationContainer } from '@react-navigation/native';
+import MainStack from './src/navigation/MainStack';
 const App = () => {
   return(
-    <>
-    <LoopCycler/>
-    </>
-    
+    <NavigationContainer>
+      <MainStack />
+    </NavigationContainer>
   )
 }
+
 export default App

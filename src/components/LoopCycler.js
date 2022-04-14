@@ -25,7 +25,7 @@ const LoopCycler = () => {
         } else {
                 Animated.parallel([
                         Animated.timing(progress, { toValue: 0.5, duration: 1000, useNativeDriver: true }),
-                        Animated.timing(scale, { toValue: 1, duration: 1000, useNativeDriver: true })
+                        Animated.timing(scale, { toValue: 0.5, duration: 1000, useNativeDriver: true })
                 ]).start()
         }
        
