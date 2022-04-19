@@ -1,12 +1,12 @@
-
-import React, { useRef, useEffect } from 'react'
+import { View, Text } from 'react-native'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
-import MainStack from './src/navigation/MainStack';
+import MainStack from './src/navigations/MainStack';
 const App = () => {
-  return(
+  return (
     <NavigationContainer>
-      <MainStack />
-    </NavigationContainer>
+    <MainStack />
+  </NavigationContainer>
   )
 }
 
